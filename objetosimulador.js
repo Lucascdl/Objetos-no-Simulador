@@ -1,0 +1,29 @@
+class Emprestimo {
+    constructor(valorTotal, taxaDeJuros, numParcelas) {
+        this.valorTotal = valorTotal;
+        this.taxaDeJuros = taxaDeJuros;
+        this.numParcelas = numParcelas;
+    }
+
+    simular() {
+        let saldoDevedor = this.valorTotal;
+        console.log(`\nSimulação de empréstimo para R$${this.valorTotal.toFixed(2)} em ${this.numParcelas} parcelas com taxa de juros de ${(this.taxaDeJuros * 100).toFixed(2)}% ao mês:\n`);
+
+        for (let parcelaAtual = 1; parcelaAtual <= this.numParcelas; parcelaAtual++) {
+            let juros = saldoDevedor * this.taxaDeJuros;
+            let valorParcela = (saldoDevedor / (this.numParcelas - parcelaAtual + 1)) + juros;
+
+            console.log(`Parcela ${parcelaAtual}: R$${valorParcela.toFixed(2)} | Saldo devedor: R$${saldoDevedor.toFixed(2)}`);
+
+            saldoDevedor -= (valorParcela - juros);
+        }
+
+        console.log("\nSimulação concluída.");
+    }
+}
+
+const emprestimoValor = parseFloat(prompt("Digite o valor total do empréstimo:"));
+const taxaDeJuros = parseFloat(prompt("Digite a taxa de juros mensal (em %):")) / 100;
+const numParcelas = parseInt(prompt("Digite o número de parcelas:"));
+
+new Emprestimo(emprestimoValor, taxaDeJuros, numParcelas).simular();
